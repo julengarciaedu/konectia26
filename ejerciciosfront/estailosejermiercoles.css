@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+ul {
+    list-style: none; /* Quitamos los estilos */
+    margin: 0px; /* Sin márgenes */
+    padding: 0px; /* Sin relleno */
+}
+
+li {
+    position: relative; /* Posición relativa */
+    display: inline-block; /* elementos en línea (menu horizontal) */
+}
+
+a {
+    display: block; /* elemento de bloque */
+    padding: 10px 20px; /* Relleno de 10 arriba y abajo y 20 en los lados */
+    color: white; /* Texto blanco */
+    background-color: red; /* Fondo rojo */
+    border: 2px solid black; /* Borde sólido de 10px */
+    border-radius: 10px; /* Esquinas redondeadas */
+    text-decoration: none; /* Quito el subrayado del enlace */
+    transition: background-color 0.5s; /* Transicion suave (solo durante cambios) */
+}
+
+/*li:hover > a{
+    background-color: #cc0000;
+}*/
+
+a:hover{
+    background-color: #cc0000; /* Al pasar el ratón cambiamos el fondo */
+}
+
+li ul {
+    display: none; /* Elementos ocultos de forma predeterminada */
+    position: absolute; /* Submenus con posición absoluta */
+    top: 100%; /* alineado con la parte inferior del elemento padre */
+    left: 0; /* alineado a la izquierda */
+    background-color: lightgray; /* fondo gris claro */
+    min-width: 160px; /* Ancho mínimo de 160px */
+    border-radius: 0 0 10px 10px; /* Esquinas redondeadas */
+    /* border-bottom-left-radius: 10px; */
+    z-index: 1; /* Índice z para controlar la superposición */
+}
+
+li ul li {
+    display: block; /* Los elementos de lista en bloque */
+    border-radius: 10px; /* Con esquinas redondeadas */
+}
+
+li:hover > ul { /* Afecta solo al ul que sea hijo inmediato, no a todos los uls inferiores */
+    display: block; /* Cuando se pasa el ratón se muestra el submenu */
+}
