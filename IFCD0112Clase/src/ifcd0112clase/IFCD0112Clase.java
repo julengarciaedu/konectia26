@@ -6,6 +6,7 @@ package ifcd0112clase;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -267,7 +268,28 @@ public class IFCD0112Clase {
     }
 
     public static void leerYEscribirDominios() {
-        //Código
+        try {
+            // Variable para leer el fichero
+            BufferedReader br = new BufferedReader(new FileReader("C:\\tmp_clase\\listaurls.txt"));
+            // Variable para escribir en el fichero
+            BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\tmp_clase\\listadominios.txt"));
+            // Declaro la variable para guardar las líneas
+            String linea;
+            //Recorremos el fichero para leer las urls
+            while ((linea = br.readLine())!=null) {
+                //String dominio = extraerDominio(linea);
+                //bw.write(dominio);
+                // En la línea tengo guardada la url de la línea que acabo de leer
+                // llamo a la función que extrae el dominio, y mediante el write lo escribo en el
+                // fichero de destino.
+                bw.write(extraerDominio(linea));
+                bw.newLine();
+            }
+            bw.close();
+            br.close();          
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /*
