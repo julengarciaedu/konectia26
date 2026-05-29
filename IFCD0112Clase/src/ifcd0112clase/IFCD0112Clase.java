@@ -49,6 +49,8 @@ public class IFCD0112Clase {
             System.out.println("9. Exclamativa");
             System.out.println("10. Examen, ejercicio 1.");
             System.out.println("11. Examen, ejercicio 2.");
+            System.out.println("12. Generar txt desde csv");
+            System.out.println("13. Generar html desde csv");
             System.out.println("------------------------------------------------------------ ");
             System.out.println("Introduce tu opción (número) o 0 para salir:");
             //Esperamos a que se introduzca un número por consola
@@ -91,6 +93,12 @@ public class IFCD0112Clase {
                     break;
                 case 11:
                     examen2_2();
+                    break;
+                case 12:
+                    contabilidad("src\\ifcd0112clase\\assets\\contaplus26.csv");
+                    break;
+                case 13:
+                    contabilidadHTML("src\\ifcd0112clase\\assets\\contaplus26.csv");
                     break;
 
             }
@@ -386,6 +394,123 @@ public class IFCD0112Clase {
     public static void examen2_2(){ 
         //Código
     }
+    
+    
+    /*
+    Dado el fichero con el contenido la contabilidad por meses calcula el ingreso, gato y balance de cada mes, y el anual 
+    escribiendo la informacion en un txt llamado resumen.txt
+    */
+    
+    public static void contabilidad(String ruta) {
+        try {
+            //Iniciamos las variables
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta.substring(0, ruta.lastIndexOf("\\") + 1) + "resumen.txt"));
+            String linea;
+            int ingresoAnual = 0;
+            int gastoAnual = 0;
+            
+            //Empezamos a darle formato al txt
+            bw.write("#############  CONTABILIDAD 2026  #############");
+            bw.newLine();
+            //Tratamos los datos del .csv linia por linea y separandolo por comas
+            while ((linea = br.readLine()) != null) {
+                String[] balance = linea.split(",");
+                int ingreso = 0;
+                int gasto = 0;
+                //Calculamos los ingresesos y gastos del mes y se lo sumamos al anual
+                for (int i = 1; i < balance.length; i++) {
+                    int num = Integer.parseInt(balance[i]);
+                    if (num > 0) {
+                        ingreso += num;
+                        ingresoAnual += num;
+                    } else {
+                        gasto += num;
+                        gastoAnual += num;
+                    }
+                }
+                //Añadimos los datos del mes
+                bw.newLine();
+                bw.write(balance[0].toUpperCase());
+                bw.newLine();
+                bw.write("-------------");
+                bw.newLine();
+                bw.write("Gasto:" + gasto);
+                bw.newLine();
+                bw.write("Ingreso:" + ingreso);
+                bw.newLine();
+                bw.write("Balance:" + (ingreso + gasto));
+                bw.newLine();
+                bw.newLine();
+                bw.write("#############");
+                bw.newLine();
+            }
+            //Añadimos los datos del año
+            bw.newLine();
+            bw.write("ANUAL");
+            bw.newLine();
+            bw.write("-------------");
+            bw.newLine();
+            bw.write("Gasto:" + gastoAnual);
+            bw.newLine();
+            bw.write("Ingreso:" + ingresoAnual);
+            bw.newLine();
+            bw.write("Balance:" + (ingresoAnual + gastoAnual));
+            bw.newLine();
+            bw.newLine();
+            bw.write("###############################################");
+            br.close();
+            bw.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private static void contabilidadHTML(String ruta) {
+        try {
+            //Iniciamos las variables
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta.substring(0, ruta.lastIndexOf("\\") + 1) + "resumen.html"));
+            String linea;
+            int ingresoAnual = 0;
+            int gastoAnual = 0;
+            //Empezamos la primera parte fija del HTML todo en una linea sin saltos de linea
+            bw.write("<!DOCTYPE html><html lang=\"es\"> <head><title>Balance 2026</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"></head><body><div class=\"container mt-4\"><header class=\"mb-4\"><h1>Contabilidad 2026</h1></header><main><table class=\"table table-striped table-hover\"><thead class=\"table-dark\"><tr><th scope=\"col\">MES</th><th scope=\"col\">INGRESO</th><th scope=\"col\">GASTO</th><th scope=\"col\">BALANCE</th></tr></thead><tbody>");
+            bw.newLine();
+            //Calculamos los ingresesos y gastos del mes y se lo sumamos al anual
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                int ingreso = 0;
+                int gasto = 0;
+                for (int i = 1; i < datos.length; i++) {
+                    int num = Integer.parseInt(datos[i]);
+                    if (num > 0) {
+                        ingreso += num;
+                        ingresoAnual += num;
+                    } else {
+                        gasto += num;
+                        gastoAnual += num;
+                    }
+                }
+                //Escritura en HTML de cada linia de la tabla de los meses
+                bw.write("<tr><th scope=\"row\">" + datos[0] + "</th><td>" + ingreso + " &#x20AC</td><td>" + gasto + " &#x20AC</td><td>" + (ingreso + gasto) + " &#x20AC</td></tr>");
+                bw.newLine();
+            }
+            //Escritura en HTML de la linea del año
+            bw.write("<tr><th scope=\"row\">Anual</th><td>" + ingresoAnual + " &#x20AC</td><td>" + gastoAnual + " &#x20AC</td><td>" + (ingresoAnual + gastoAnual) + " &#x20AC</td></tr>");
+            bw.newLine();
+            //Escritura del cierre de HTML
+            bw.write("</tbody></table></main></div><script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"></script></body></html>");
+            bw.newLine();
+            br.close();
+            bw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
     
     
