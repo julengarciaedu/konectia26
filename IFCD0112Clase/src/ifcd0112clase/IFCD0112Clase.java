@@ -49,6 +49,7 @@ public class IFCD0112Clase {
             System.out.println("9. Exclamativa");
             System.out.println("10. Examen, ejercicio 1.");
             System.out.println("11. Examen, ejercicio 2.");
+            System.out.println("12. Contabilidad.");
             System.out.println("------------------------------------------------------------ ");
             System.out.println("Introduce tu opción (número) o 0 para salir:");
             //Esperamos a que se introduzca un número por consola
@@ -92,6 +93,9 @@ public class IFCD0112Clase {
                 case 11:
                     examen2_2();
                     break;
+                case 12:
+                    contabilidad();
+                    break;    
 
             }
         }
@@ -387,7 +391,71 @@ public class IFCD0112Clase {
         //Código
     }
 
+    /**
+     * Función que realiza la contabilidad a partir
+     * de un fichero csv con el siguiente formato:
+     * 
+     * Enero,2500,-1200,3100,-800,400,-200,1500,-700,2200,-1300,900,-400,1800,-600,2750,-950
+     * Febrero,2800,-1400,3200,-900,500,-300,1600,-750,2300,-1350,1000,-450,1900,-650,2850,-1000
+     */
     
+    public static void contabilidad(){
+        try{
+            //Declaramos las variables
+            BufferedReader br = new BufferedReader(new FileReader("c:\\tmp_clase\\contaplus26.csv"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("c:\\tmp_clase\\contaplus26_balance.txt"));
+            String linea = ""; //Va a almacenar cada linea de lectura del fichero original
+            int totalIngresos = 0;
+            int totalGastos = 0;
+            //Tuneamos el fichero
+            bw.write(" ############## CONTABILIDAD 2026 ##############");
+            bw.newLine();
+            bw.write(" ###############################################");
+            bw.newLine();
+            //Empezamos a leer 
+            while ((linea = br.readLine()) != null) {
+                //variables para calcular los gastos e ingresos parciale del mes
+                int ingresoMes = 0;
+                int gastoMes = 0;
+                //procesamos los datos, que están separados por ','
+                String[] datos = linea.split(",");
+                bw.newLine();
+                //Escribimos el nombre del mes, que está 
+                bw.write("---- "+datos[0]+" ----");
+                bw.newLine();
+                //Recorremos los datos que contienen las cantidades
+                for (int i = 1; i < datos.length; i++) {
+                    int num = Integer.parseInt(datos[i]);
+                    if (num > 0) ingresoMes+= num;
+                    else gastoMes += num;
+                }
+                totalIngresos += ingresoMes;
+                totalGastos += gastoMes;
+                bw.write("Ingresos: "+ingresoMes+"€");
+                bw.newLine();
+                bw.write("Gastos: "+gastoMes+"€");
+                bw.newLine();
+                bw.write("----------------");
+                bw.newLine();
+                bw.write("Balance: "+(ingresoMes+gastoMes)+"€");
+                bw.newLine();
+            }
+            bw.write("----------------------------");
+            bw.newLine();
+            bw.write("----- ANUAL -----");
+            bw.newLine();
+            bw.write("Ingresos: "+totalIngresos+"€");
+            bw.newLine();
+            bw.write("Gastos: "+totalGastos+"€");
+            bw.write("----------------------------");
+            bw.newLine();
+            bw.write("Balance: "+(totalIngresos+totalGastos)+"€");
+            bw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+    }
     
 }
 
