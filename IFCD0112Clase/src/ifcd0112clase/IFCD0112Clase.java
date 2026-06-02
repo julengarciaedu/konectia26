@@ -91,7 +91,7 @@ public class IFCD0112Clase {
                     examen2_1();
                     break;
                 case 11:
-                    examen2_2();
+                    generarFicheroUsuarios();
                     break;
                 case 12:
                     contabilidad();
@@ -333,15 +333,45 @@ public class IFCD0112Clase {
     Leer el contenido del archivo.
     Limpiar cada línea: Eliminar espacios al principio y al final. Convertir a mayúsculas solo la primera letra y el resto a minúsculas.
     Guardar los nombres procesados en un nuevo archivo llamado nombres_limpios.txt.
+    Por ejemplo:
+    mAr ía
+     J O S E
+    TimoTeo
+     Begoña
+    BenZoDiCepino  
+    I bup Profeno
     */
     
     public static String limpiaNombre(String nombre) {
-        //Código
-        return "";
+        //Si la línea está vacía nos devuelve un vacío,
+        // si solo hay una letra, nos la devuelve en mayúscula
+        // y si no la primera letra en mayúscula y el resto en minúscula (PascalCase)
+        nombre = nombre.trim().replace(" ","").toLowerCase();
+        if (nombre.length()==0) return "";
+        else if (nombre.length() == 1) return nombre.toUpperCase();
+        else return nombre.substring(0,1).toUpperCase()+nombre.substring(1);
+        //return nombre.toUpperCase().charAt(0)+nombre.substring(1);
     }
     
     public static void limpiarNombres() {
-        //Código
+        //Declaro las variables
+        String rutaficherolec = "c:\\tmp_clase\\nombres.txt";
+        String rutaficheroesc = "c:\\tmp_clase\\nombres_limpios.txt";
+        try {
+            String nombre;
+            BufferedReader br = new BufferedReader(new FileReader(rutaficherolec));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(rutaficheroesc, true));
+            //Leemos el fichero para recoger cada uno de los nombres
+            // "mientras" haya datos en el fichero (leer una línea sea diferente de null)
+            while((nombre = br.readLine()) != null) {
+                //if (!nombre.trim().equals("")) 
+                    bw.write(limpiaNombre(nombre)+"\n");
+            }
+            bw.close();
+            br.close();  
+        } catch (Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }
 
     }
     
@@ -383,12 +413,33 @@ public class IFCD0112Clase {
     */
     
     public static String generarUsuario(String nombre, ArrayList<String> comprobar) {
-        //Código
-        return "";
+        String usuario = nombre.substring(0,1)+nombre.substring(nombre.indexOf(" ")+1, nombre.indexOf(" ")+4);
+        int contador = 1;
+        while (comprobar.contains(usuario+contador)) contador++;
+        return usuario+contador;
     }
     
-    public static void examen2_2(){ 
-        //Código
+    public static void generarFicheroUsuarios(){ 
+            String nomarchivoorigen = "c:/tmp/lista_empleados.txt";
+        String nomarchivodestino = "c:/tmp/lista_usuarios.txt";
+        //Para gestionar errores, tengo que añadir un bloque de código try-catch
+         try {
+            BufferedReader br = new BufferedReader(new FileReader(nomarchivoorigen));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(nomarchivodestino));
+            //En esta línea vamos a guardar cada una de las líneas del fichero
+            String[] listaNombres = br.readLine().split(";");
+            br.close();
+            ArrayList<String> listaUsuarios = new ArrayList<>();
+            for (String nom : listaNombres){
+                String usuario = generarUsuario(nom.toLowerCase(), listaUsuarios);
+                listaUsuarios.add(usuario);
+                bw.write(nom+" : "+usuario+"\n");
+            }
+            br.close();
+            bw.close();
+        } catch (Exception e) { //Si se produce un error (excepción) se "captura" aquí
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -419,6 +470,7 @@ public class IFCD0112Clase {
                 int gastoMes = 0;
                 //procesamos los datos, que están separados por ','
                 String[] datos = linea.split(",");
+                //Arrays.
                 bw.newLine();
                 //Escribimos el nombre del mes, que está 
                 bw.write("---- "+datos[0]+" ----");
