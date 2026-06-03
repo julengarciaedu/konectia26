@@ -6,10 +6,10 @@ package ifcd0112clase;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +24,7 @@ public class IFCD0112Clase {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-/* Este programa ejecuta todos los programas que hemos ido haciendo en los ejercicios */
+        /* Este programa ejecuta todos los programas que hemos ido haciendo en los ejercicios */
         //Ponemos la consola en UTF-8
         //PrintStream out = new PrintStream(System.out, true, "UTF-8");
         System.out.println("Encoding por defecto: " + System.getProperty("file.encoding"));
@@ -49,7 +49,13 @@ public class IFCD0112Clase {
             System.out.println("9. Exclamativa");
             System.out.println("10. Examen, ejercicio 1.");
             System.out.println("11. Examen, ejercicio 2.");
+//<<<<<<< HEAD
             System.out.println("12. Contabilidad.");
+//=======
+//            System.out.println("12. Generar txt desde csv");
+            System.out.println("13. Generar html desde csv");
+//>>>>>>> origin/EjercicioJavierFicheros
+            System.out.println("14. Contador palabras (HashMap)");
             System.out.println("------------------------------------------------------------ ");
             System.out.println("Introduce tu opción (número) o 0 para salir:");
             //Esperamos a que se introduzca un número por consola
@@ -94,9 +100,19 @@ public class IFCD0112Clase {
                     generarFicheroUsuarios();
                     break;
                 case 12:
+//<<<<<<< HEAD
                     contabilidad();
-                    break;    
-
+                    break;
+//=======
+//                    contabilidad("src\\ifcd0112clase\\assets\\contaplus26.csv");
+//                    break;
+                case 13:
+                    contabilidadHTML("src\\ifcd0112clase\\assets\\contaplus26.csv");
+                    break;
+//>>>>>>> origin/EjercicioJavierFicheros
+                case 14:
+                    contadorDePalabras();
+                    break;
             }
         }
         System.out.println("Fin del programa.");
@@ -260,13 +276,13 @@ public class IFCD0112Clase {
         String dominio = url.substring(url.indexOf(".")+1);
         return dominio = dominio.substring(0, dominio.indexOf("/");
          */
-        /*
+ /*
         Alternativa 2:
         url = url.replace("https", "http").replace("http://", "");
         int inicio = url.indexOf(".");
         int fin = url.indexOf("/");
         return url.substring(inicio+1, fin);
-        */
+         */
         //A lo bestia
         return url.substring(url.indexOf(".") + 1, url.substring(url.indexOf(".")).indexOf("/") + url.indexOf("."));
     }
@@ -280,7 +296,7 @@ public class IFCD0112Clase {
             // Declaro la variable para guardar las líneas
             String linea;
             //Recorremos el fichero para leer las urls
-            while ((linea = br.readLine())!=null) {
+            while ((linea = br.readLine()) != null) {
                 //String dominio = extraerDominio(linea);
                 //bw.write(dominio);
                 // En la línea tengo guardada la url de la línea que acabo de leer
@@ -290,7 +306,7 @@ public class IFCD0112Clase {
                 bw.newLine();
             }
             bw.close();
-            br.close();          
+            br.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -325,8 +341,7 @@ public class IFCD0112Clase {
         //Código
 
     }
-    
-    
+
     /*
     65.- Procesar nombres desde un fichero de texto: 
     Crear un archivo de texto llamado nombres.txt que contenga, uno por línea, nombres de personas con espacios y letras en mayúsculas/minúsculas desordenadas.
@@ -340,19 +355,22 @@ public class IFCD0112Clase {
      Begoña
     BenZoDiCepino  
     I bup Profeno
-    */
-    
+     */
     public static String limpiaNombre(String nombre) {
         //Si la línea está vacía nos devuelve un vacío,
         // si solo hay una letra, nos la devuelve en mayúscula
         // y si no la primera letra en mayúscula y el resto en minúscula (PascalCase)
-        nombre = nombre.trim().replace(" ","").toLowerCase();
-        if (nombre.length()==0) return "";
-        else if (nombre.length() == 1) return nombre.toUpperCase();
-        else return nombre.substring(0,1).toUpperCase()+nombre.substring(1);
+        nombre = nombre.trim().replace(" ", "").toLowerCase();
+        if (nombre.length() == 0) {
+            return "";
+        } else if (nombre.length() == 1) {
+            return nombre.toUpperCase();
+        } else {
+            return nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
+        }
         //return nombre.toUpperCase().charAt(0)+nombre.substring(1);
     }
-    
+
     public static void limpiarNombres() {
         //Declaro las variables
         String rutaficherolec = "c:\\tmp_clase\\nombres.txt";
@@ -363,32 +381,30 @@ public class IFCD0112Clase {
             BufferedWriter bw = new BufferedWriter(new FileWriter(rutaficheroesc, true));
             //Leemos el fichero para recoger cada uno de los nombres
             // "mientras" haya datos en el fichero (leer una línea sea diferente de null)
-            while((nombre = br.readLine()) != null) {
+            while ((nombre = br.readLine()) != null) {
                 //if (!nombre.trim().equals("")) 
-                    bw.write(limpiaNombre(nombre)+"\n");
+                bw.write(limpiaNombre(nombre) + "\n");
             }
             bw.close();
-            br.close();  
-        } catch (Exception e){
-            System.out.println("Error: "+e.getMessage());
+            br.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
     }
-    
-    
+
     /*
     72.- Dado el fichero con el contenido de un libro, quiero sacar a otro fichero todas las frases 
     que están entre exclamaciones de abrir y de cerrar. Por ejemplo, para el texto 
     "Vamos a extraer ¡todas! las palabras que estén ¡entre exclamaciones! para poder sacar ¡un maldito 10!" 
     escribiremos en otro fichero todas estas frases en mayúsculas, como si estuviéramos gritando, cada una en una línea. 
-    */
-    
+     */
     public static void exclamativa() {
         //Código
 
     }
-    
-    public static ArrayList<String> extraerExclamaciones(String cadena){
+
+    public static ArrayList<String> extraerExclamaciones(String cadena) {
         ArrayList<String> resultado = new ArrayList<>();
         //Código
         return resultado;
@@ -396,44 +412,44 @@ public class IFCD0112Clase {
 
     /*
         Examen 2ºEval, Ejercicio 1
-    */
-    
+     */
     public static String cambiaExt(String ext, String cadena) {
         //Código
         return "";
     }
-    
-    public static void examen2_1(){
-    //Código
+
+    public static void examen2_1() {
+        //Código
 
     }
-    
+
     /*
         Examen 2ºEval, Ejercicio 2
-    */
-    
+     */
     public static String generarUsuario(String nombre, ArrayList<String> comprobar) {
-        String usuario = nombre.substring(0,1)+nombre.substring(nombre.indexOf(" ")+1, nombre.indexOf(" ")+4);
+        String usuario = nombre.substring(0, 1) + nombre.substring(nombre.indexOf(" ") + 1, nombre.indexOf(" ") + 4);
         int contador = 1;
-        while (comprobar.contains(usuario+contador)) contador++;
-        return usuario+contador;
+        while (comprobar.contains(usuario + contador)) {
+            contador++;
+        }
+        return usuario + contador;
     }
-    
-    public static void generarFicheroUsuarios(){ 
-            String nomarchivoorigen = "c:/tmp/lista_empleados.txt";
+
+    public static void generarFicheroUsuarios() {
+        String nomarchivoorigen = "c:/tmp/lista_empleados.txt";
         String nomarchivodestino = "c:/tmp/lista_usuarios.txt";
         //Para gestionar errores, tengo que añadir un bloque de código try-catch
-         try {
+        try {
             BufferedReader br = new BufferedReader(new FileReader(nomarchivoorigen));
             BufferedWriter bw = new BufferedWriter(new FileWriter(nomarchivodestino));
             //En esta línea vamos a guardar cada una de las líneas del fichero
             String[] listaNombres = br.readLine().split(";");
             br.close();
             ArrayList<String> listaUsuarios = new ArrayList<>();
-            for (String nom : listaNombres){
+            for (String nom : listaNombres) {
                 String usuario = generarUsuario(nom.toLowerCase(), listaUsuarios);
                 listaUsuarios.add(usuario);
-                bw.write(nom+" : "+usuario+"\n");
+                bw.write(nom + " : " + usuario + "\n");
             }
             br.close();
             bw.close();
@@ -442,16 +458,128 @@ public class IFCD0112Clase {
         }
     }
 
+    /*
+    Dado el fichero con el contenido la contabilidad por meses calcula el ingreso, gato y balance de cada mes, y el anual 
+    escribiendo la informacion en un txt llamado resumen.txt
+     */
+    public static void contabilidad(String ruta) {
+        try {
+            //Iniciamos las variables
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta.substring(0, ruta.lastIndexOf("\\") + 1) + "resumen.txt"));
+            String linea;
+            int ingresoAnual = 0;
+            int gastoAnual = 0;
+
+            //Empezamos a darle formato al txt
+            bw.write("#############  CONTABILIDAD 2026  #############");
+            bw.newLine();
+            //Tratamos los datos del .csv linia por linea y separandolo por comas
+            while ((linea = br.readLine()) != null) {
+                String[] balance = linea.split(",");
+                int ingreso = 0;
+                int gasto = 0;
+                //Calculamos los ingresesos y gastos del mes y se lo sumamos al anual
+                for (int i = 1; i < balance.length; i++) {
+                    int num = Integer.parseInt(balance[i]);
+                    if (num > 0) {
+                        ingreso += num;
+                        ingresoAnual += num;
+                    } else {
+                        gasto += num;
+                        gastoAnual += num;
+                    }
+                }
+                //Añadimos los datos del mes
+                bw.newLine();
+                bw.write(balance[0].toUpperCase());
+                bw.newLine();
+                bw.write("-------------");
+                bw.newLine();
+                bw.write("Gasto:" + gasto);
+                bw.newLine();
+                bw.write("Ingreso:" + ingreso);
+                bw.newLine();
+                bw.write("Balance:" + (ingreso + gasto));
+                bw.newLine();
+                bw.newLine();
+                bw.write("#############");
+                bw.newLine();
+            }
+            //Añadimos los datos del año
+            bw.newLine();
+            bw.write("ANUAL");
+            bw.newLine();
+            bw.write("-------------");
+            bw.newLine();
+            bw.write("Gasto:" + gastoAnual);
+            bw.newLine();
+            bw.write("Ingreso:" + ingresoAnual);
+            bw.newLine();
+            bw.write("Balance:" + (ingresoAnual + gastoAnual));
+            bw.newLine();
+            bw.newLine();
+            bw.write("###############################################");
+            br.close();
+            bw.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void contabilidadHTML(String ruta) {
+        try {
+            //Iniciamos las variables
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta.substring(0, ruta.lastIndexOf("\\") + 1) + "resumen.html"));
+            String linea;
+            int ingresoAnual = 0;
+            int gastoAnual = 0;
+            //Empezamos la primera parte fija del HTML todo en una linea sin saltos de linea
+            bw.write("<!DOCTYPE html><html lang=\"es\"> <head><title>Balance 2026</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"></head><body><div class=\"container mt-4\"><header class=\"mb-4\"><h1>Contabilidad 2026</h1></header><main><table class=\"table table-striped table-hover\"><thead class=\"table-dark\"><tr><th scope=\"col\">MES</th><th scope=\"col\">INGRESO</th><th scope=\"col\">GASTO</th><th scope=\"col\">BALANCE</th></tr></thead><tbody>");
+            bw.newLine();
+            //Calculamos los ingresesos y gastos del mes y se lo sumamos al anual
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                int ingreso = 0;
+                int gasto = 0;
+                for (int i = 1; i < datos.length; i++) {
+                    int num = Integer.parseInt(datos[i]);
+                    if (num > 0) {
+                        ingreso += num;
+                        ingresoAnual += num;
+                    } else {
+                        gasto += num;
+                        gastoAnual += num;
+                    }
+                }
+                //Escritura en HTML de cada linia de la tabla de los meses
+                bw.write("<tr><th scope=\"row\">" + datos[0] + "</th><td>" + ingreso + " &#x20AC</td><td>" + gasto + " &#x20AC</td><td>" + (ingreso + gasto) + " &#x20AC</td></tr>");
+                bw.newLine();
+            }
+            //Escritura en HTML de la linea del año
+            bw.write("<tr><th scope=\"row\">Anual</th><td>" + ingresoAnual + " &#x20AC</td><td>" + gastoAnual + " &#x20AC</td><td>" + (ingresoAnual + gastoAnual) + " &#x20AC</td></tr>");
+            bw.newLine();
+            //Escritura del cierre de HTML
+            bw.write("</tbody></table></main></div><script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"></script></body></html>");
+            bw.newLine();
+            br.close();
+            bw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     /**
-     * Función que realiza la contabilidad a partir
-     * de un fichero csv con el siguiente formato:
-     * 
+     * Función que realiza la contabilidad a partir de un fichero csv con el
+     * siguiente formato:
+     *
      * Enero,2500,-1200,3100,-800,400,-200,1500,-700,2200,-1300,900,-400,1800,-600,2750,-950
      * Febrero,2800,-1400,3200,-900,500,-300,1600,-750,2300,-1350,1000,-450,1900,-650,2850,-1000
      */
-    
-    public static void contabilidad(){
-        try{
+    public static void contabilidad() {
+        try {
             //Declaramos las variables
             BufferedReader br = new BufferedReader(new FileReader("c:\\tmp_clase\\contaplus26.csv"));
             BufferedWriter bw = new BufferedWriter(new FileWriter("c:\\tmp_clase\\contaplus26_balance.txt"));
@@ -473,54 +601,93 @@ public class IFCD0112Clase {
                 //Arrays.
                 bw.newLine();
                 //Escribimos el nombre del mes, que está 
-                bw.write("---- "+datos[0]+" ----");
+                bw.write("---- " + datos[0] + " ----");
                 bw.newLine();
                 //Recorremos los datos que contienen las cantidades
                 for (int i = 1; i < datos.length; i++) {
                     int num = Integer.parseInt(datos[i]);
-                    if (num > 0) ingresoMes+= num;
-                    else gastoMes += num;
+                    if (num > 0) {
+                        ingresoMes += num;
+                    } else {
+                        gastoMes += num;
+                    }
                 }
                 totalIngresos += ingresoMes;
                 totalGastos += gastoMes;
-                bw.write("Ingresos: "+ingresoMes+"€");
+                bw.write("Ingresos: " + ingresoMes + "€");
                 bw.newLine();
-                bw.write("Gastos: "+gastoMes+"€");
+                bw.write("Gastos: " + gastoMes + "€");
                 bw.newLine();
                 bw.write("----------------");
                 bw.newLine();
-                bw.write("Balance: "+(ingresoMes+gastoMes)+"€");
+                bw.write("Balance: " + (ingresoMes + gastoMes) + "€");
                 bw.newLine();
             }
             bw.write("----------------------------");
             bw.newLine();
             bw.write("----- ANUAL -----");
             bw.newLine();
-            bw.write("Ingresos: "+totalIngresos+"€");
+            bw.write("Ingresos: " + totalIngresos + "€");
             bw.newLine();
-            bw.write("Gastos: "+totalGastos+"€");
+            bw.write("Gastos: " + totalGastos + "€");
             bw.write("----------------------------");
             bw.newLine();
-            bw.write("Balance: "+(totalIngresos+totalGastos)+"€");
+            bw.write("Balance: " + (totalIngresos + totalGastos) + "€");
             bw.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
-    
+
+    /**
+     * 62. A. Leer un fichero y generar un HashMap<String, Integer> donde la
+     * clave sea la palabra y el valor la cantidad de apariciones. 
+     * B. Usando el HashMap anterior, crear un fichero con las palabras que aparecen más de 5
+     * veces.
+     */
+    public static void contadorDePalabras() {
+        try {
+            //String textoLimpio = textoOriginal.replaceAll("[^a-zA-Z0-9]", " ").replaceAll("\\s{2,}", "");
+            //Vamos a abrir el fichero y lo vamos a recorrer
+            //A. Leemos el fichero
+            BufferedReader br = new BufferedReader(new FileReader("c:\\tmp_clase\\textoejercicio.txt"));
+            //B. Escribimos el fichero
+            BufferedWriter bw = new BufferedWriter(new FileWriter("c:\\tmp_clase\\palabrasimpor.txt"));
+            //HashMap que va a guardar las palabras y su contador.
+            HashMap<String, Integer> colPalabras = new HashMap<>();
+            String linea = ""; //Va a almacenar cada linea de lectura del fichero original
+            while( (linea=br.readLine()) != null) {
+                //La primera expresión regular, deja solo los números y las letras (con acento)
+                // y la segunda indica que "cualquier cadena que tenga uno o más espacios"
+                linea = linea.replaceAll("[^\\p{L}\\p{N}]", " ").replaceAll("\\s{1,}", " ");
+                // Separamos las palabras de la línea
+                String[] palabras = linea.split(" ");
+                for(String palabra : palabras) {
+                    //Pregunto si existe ya la clave, es decir, que ya existe la palabra
+                    if(colPalabras.containsKey(palabra)) {                      
+                        colPalabras.put(palabra, colPalabras.get(palabra)+1);
+                        //otra versión
+                        //colPalabras.replace(palabra, colPalabras.get(palabra)+1);
+                    } else {
+                        colPalabras.put(palabra, 1);
+                    }
+                }
+            }
+            //System.out.println(colPalabras.toString());
+            //B. Recorremos la estructura. El keySet me devuelve un array con las claves
+            // y lo recorro con un foreach
+            for (String palabra : colPalabras.keySet()) {
+                if(colPalabras.get(palabra)>5) {
+                    bw.write("'"+palabra+"' se repite "+colPalabras.get(palabra)+" veces.\n");
+                }
+            }
+            br.close();
+            bw.close();
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex.getMessage());
+        }
+
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
