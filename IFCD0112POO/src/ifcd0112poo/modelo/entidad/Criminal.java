@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ifcd0112poo;
+package ifcd0112poo.modelo.entidad;
 
 /**
  *
@@ -11,8 +11,9 @@ package ifcd0112poo;
 public class Criminal {
     
     //Defino los atributos
-    String nombre;
-    String estado; //libre, preso
+    private String nombre;
+    private String estado; //libre, preso
+    private String dni;
 
     //Constructor
     public Criminal(String nombre, String estado) {
@@ -38,6 +39,36 @@ public class Criminal {
         return "Criminal{" + "nombre=" + nombre + ", estado=" + estado + '}';
     }
     
+    /**
+     * Genero los Getter y Setter
+     */
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        
+        this.dni = String.valueOf(dni)+calcularLetraDNI(dni);
+    }
     
+    private char calcularLetraDNI(int numerico){
+        return 'L';
+    }
     
 }

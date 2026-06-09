@@ -4,6 +4,8 @@
  */
 package ifcd0112poo;
 
+import ifcd0112poo.modelo.entidad.Criminal;
+
 /**
  *
  * @author Julen Profe
@@ -18,13 +20,25 @@ public class IFCD0112POO {
         Criminal crim = new Criminal("Martin", "Libre"); //Creo una instancia de la clase (objeto)
         Criminal crim2 = new Criminal ("Jose");
         Criminal crim3 = new Criminal();
-        crim3.nombre = "Julen"; //escribo en sus atributos
-        crim3.estado = "preso";
-        System.out.println(crim.nombre+" es un peligroso criminal que está "+crim.estado); //leo sus atributos
+        //Acabo de poner los atributos como private en la clase Criminal.java
+        // así que ya no puedo acceder a los atributos directamente.
+//        crim3.nombre = "Julen"; //escribo en sus atributos
+//        crim3.estado = "preso";
+//        System.out.println(crim.nombre+" es un peligroso criminal que está "+crim.estado); //leo sus atributos
+//        crim.saludar(); //llamo a sus métodos
+//        System.out.println(crim2.nombre+" es un peligroso criminal que está "+crim2.estado); //leo sus atributos
+//        crim2.saludar(); //llamo a sus métodos
+//        System.out.println(crim3.nombre+" es un peligroso criminal que está "+crim3.estado); //leo sus atributos
+          //Ahora accedo a través de los getter y setter  
+        crim3.setNombre("Julen"); //escribo en sus atributos
+        crim3.setEstado("preso");
+        System.out.println(crim.getNombre()+" es un peligroso criminal que está "+crim.getEstado()); //leo sus atributos
         crim.saludar(); //llamo a sus métodos
-        System.out.println(crim2.nombre+" es un peligroso criminal que está "+crim2.estado); //leo sus atributos
+        System.out.println(crim2.getNombre()+" es un peligroso criminal que está "+crim2.getEstado()); //leo sus atributos
         crim2.saludar(); //llamo a sus métodos
-        System.out.println(crim3.nombre+" es un peligroso criminal que está "+crim3.estado); //leo sus atributos
+        System.out.println(crim3.getNombre()+" es un peligroso criminal que está "+crim3.getEstado()); //leo sus atributos
+          
+
         crim3.saludar(); //llamo a sus métodos
         System.out.println(crim.toString());
     }
