@@ -36,4 +36,5 @@ public class LogisticaUtils {
         if (p.isFragil()) coste*=1.2;
         return coste;
     }
+    
 }

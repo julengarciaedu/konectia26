@@ -4,6 +4,8 @@
  */
 package konectiaexpress;
 
+import java.util.Arrays;
+import konectiaexpress.controlador.AlmacenGestion;
 import konectiaexpress.controlador.LogisticaUtils;
 import konectiaexpress.modelo.Paquete;
 
@@ -31,6 +33,19 @@ public class KonectiaExpress {
         System.out.println("El id "+paq4.getId()+" es válido? "+LogisticaUtils.validarId(paq4.getId()));
         System.out.println("El id "+paq1.getId()+" es válido? "+LogisticaUtils.validarId(paq1.getId()));
         System.out.println(paq2.toString());
+        AlmacenGestion ag = new AlmacenGestion();
+        System.out.println(ag.registrarPaquete(paq1));
+        Paquete paq5 = new Paquete("PQ0126", 7.0, "Sevilla", true);
+        Paquete paq6 = new Paquete("PQ0127", 11.0, "Ourense", false);
+        Paquete paq7 = new Paquete("PQ0128", 4.0, "Barcelona", true);
+        ag.registrarPaquete(paq2);
+        ag.registrarPaquete(paq3);
+        ag.registrarPaquete(paq4);
+        ag.registrarPaquete(paq5);
+        ag.registrarPaquete(paq6);
+        ag.registrarPaquete(paq7);
+        //ag.listaPaquetes
+        ag.generarInformeFragiles();
     }
     
 }
