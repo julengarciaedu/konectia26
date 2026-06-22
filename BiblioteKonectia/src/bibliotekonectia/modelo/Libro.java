@@ -13,21 +13,32 @@ public class Libro {
     //Atributos
     String titulo;
     String autor;
+    //Editorial edit;
     String editorial;
     String ISBN;
     int anioedicion;
+    boolean disponible = true;
     
     //Constructor
 
     public Libro() {
     }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
     
-    public Libro(String titulo, String autor, String editorial, String ISBN, int anioedicion) {
+    public Libro(String titulo, String autor, String edit, String ISBN, int anioedicion) {
         this.titulo = titulo;
         this.autor = autor;
-        this.editorial = editorial;
+        this.editorial = edit;
         this.ISBN = ISBN;
         this.anioedicion = anioedicion;
+        this.disponible = true;
     }
     
     //Getter & Setter
@@ -77,7 +88,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", ISBN=" + ISBN + ", anioedicion=" + anioedicion + '}';
+        return "Libro{" + "titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", ISBN=" + ISBN + ", anioedicion=" + anioedicion + ", disponible=" + this.disponible+'}';
     }
     
 }

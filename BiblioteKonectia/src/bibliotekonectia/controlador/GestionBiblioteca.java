@@ -7,8 +7,8 @@ package bibliotekonectia.controlador;
 import bibliotekonectia.modelo.Libro;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -59,10 +59,15 @@ public class GestionBiblioteca {
      * Para probarlo, podemos pedir dos años por pantalla y sacamos la respuesta.
      */
     
-    public static ArrayList<Libro> filtrarPorAnios(ArrayList<Libro> listaLibros, Date inicio, Date fin){
+    public static ArrayList<Libro> filtrarPorAnios(ArrayList<Libro> listaLibros, LocalDate inicio, LocalDate fin){
         //Declaro la variable donde voy a cargar los libros
         ArrayList<Libro> listaFiltrada = new ArrayList<>();
-        
+        for(Libro lib : listaLibros) {
+            if (lib.getAnioedicion()>=inicio.getYear() && 
+                    lib.getAnioedicion() <= fin.getYear()) {
+                listaFiltrada.add(lib);
+            }
+        }
         return listaFiltrada;
     }
     
