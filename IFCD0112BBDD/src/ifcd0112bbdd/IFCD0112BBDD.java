@@ -57,19 +57,34 @@ public class IFCD0112BBDD {
 //            // Cerrar la conexión (importante para liberar recursos)
 //            System.out.println("Se han cargado en la lista "+listaPokes.size()+ " pokemones.");
 //            conexion.close();
-              Pokemon poke = new PokemonDao().obtenerPokemonPorId(1);
-              if (poke != null) System.out.println(poke.toString());
-              poke = new PokemonDao().obtenerPokemonPorId(5);
-              if (poke != null) System.out.println(poke.toString());
-              poke = new PokemonDao().obtenerPokemonPorId(128);
-              if (poke != null) System.out.println(poke.toString());
-              poke = new PokemonDao().obtenerPokemonPorId(500);
-              if (poke != null) System.out.println(poke.toString());
-              
-              Pokemon pokeinsert = new Pokemon(0, "MariTrini", 0.5, 20.2);
-              if(new PokemonDao().insertarPokemon(pokeinsert)) System.out.println(pokeinsert.getNombre()+" OK");
-              pokeinsert = new Pokemon(0, "Guenestefani", 1.5, 10.2);
-              if(new PokemonDao().insertarPokemon(pokeinsert)) System.out.println(pokeinsert.getNombre()+" OK");
+//              Pokemon poke = new PokemonDao().obtenerPokemonPorId(1);
+//              if (poke != null) System.out.println(poke.toString());
+//              poke = new PokemonDao().obtenerPokemonPorId(5);
+//              if (poke != null) System.out.println(poke.toString());
+//              poke = new PokemonDao().obtenerPokemonPorId(128);
+//              if (poke != null) System.out.println(poke.toString());
+//              poke = new PokemonDao().obtenerPokemonPorId(500);
+//              if (poke != null) System.out.println(poke.toString());
+//              Pokemon pokeinsert = new Pokemon(0, "MariTrini", 0.5, 20.2);
+//              if(new PokemonDao().insertarPokemon(pokeinsert)) System.out.println(pokeinsert.getNombre()+" OK");
+//              pokeinsert = new Pokemon(0, "Guenestefani", 1.5, 10.2);
+//              if(new PokemonDao().insertarPokemon(pokeinsert)) System.out.println(pokeinsert.getNombre()+" OK");
+//              Pokemon pokeupdate = new Pokemon(158, "MarriTrrini", 1.5, 10.2);
+//              if(new PokemonDao().actualizarPokemon(pokeupdate)) System.out.println(pokeupdate.getNombre()+" OK");
+//              if(new PokemonDao().borrarPokemon(159)) System.out.println("num_pokedex:159 borrado: OK");
+                //listaPokes = new PokemonDao().obtenerPokemonPorFiltro("A", null, null, null, null);
+//                listaPokes = new PokemonDao().obtenerPokemonPorFiltro("J", null, null, 0.5, 1.0);
+//                for (Pokemon p : listaPokes) System.out.println(p.toString());
+                Pokemon pokeinsert = new Pokemon(0, "Copernica", 0.5, 20.2);
+                listaPokes.add(pokeinsert);
+                pokeinsert = new Pokemon(0, "Anthony", 3.5, 100.2);
+                listaPokes.add(pokeinsert);
+                pokeinsert = new Pokemon(0, "Tricornia", 4.5, 50.2);
+                listaPokes.add(pokeinsert);
+                pokeinsert = new Pokemon(0, "Zapaleta", 5.5, 70.2);
+                listaPokes.add(pokeinsert);
+                if(new PokemonDao().insertarPokemon(listaPokes)) System.out.println("Pokes insertados, mira el DBeaver");
+                
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }

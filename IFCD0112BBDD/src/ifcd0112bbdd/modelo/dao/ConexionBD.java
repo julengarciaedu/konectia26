@@ -16,8 +16,8 @@ public class ConexionBD {
     
     //Atributos privados y finales (constantes)
     private static final String CADENACONEXION = "jdbc:mysql://127.0.0.1:3306/pokemondb";
-    private static final String USUARIO = "root";
-    private static final String CONTRASENIA = "admin";
+    private static final String USUARIO = "pokeuser";
+    private static final String CONTRASENIA = "pokepass!4321";
     
     public static Connection conectarBD() {
         try {
